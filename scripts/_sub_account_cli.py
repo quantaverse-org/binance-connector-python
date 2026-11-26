@@ -1,10 +1,9 @@
 import argparse
-import os
-from pathlib import Path
 
 from binance_common.errors import Error, NetworkError
-from binance_sdk_sub_account.sub_account import ConfigurationRestAPI, SubAccount
-from dotenv import load_dotenv
+from binance_sdk_sub_account.sub_account import SubAccount
+
+from _binance_cli import rest_configuration
 
 
 def argument_parser(description):
@@ -15,13 +14,7 @@ def argument_parser(description):
 
 
 def rest_api():
-    load_dotenv(Path(__file__).resolve().parents[1] / ".env", interpolate=False)
-    key = os.getenv("BINANCE_MASTER_API_KEY")
-    secret = os.getenv("BINANCE_MASTER_API_SECRET")
-    if not key or not secret:
-        raise SystemExit("请在 .env 或环境变量中设置 BINANCE_MASTER_API_KEY 和 BINANCE_MASTER_API_SECRET")
-    config = ConfigurationRestAPI(api_key=key, api_secret=secret)
-    return SubAccount(config_rest_api=config).rest_api
+    return SubAccount(config_rest_api=rest_configuration()).rest_api
 
 
 def run(main):

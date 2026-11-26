@@ -17,7 +17,7 @@ class SubAccountCliTests(unittest.TestCase):
     def setUp(self):
         stack = ExitStack()
         self.addCleanup(stack.close)
-        stack.enter_context(patch("_sub_account_cli.load_dotenv"))
+        stack.enter_context(patch("_binance_cli.load_dotenv"))
         credentials = {
             "BINANCE_MASTER_API_KEY": "test-master",
             "BINANCE_MASTER_API_SECRET": "test-secret",
